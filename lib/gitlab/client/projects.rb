@@ -49,8 +49,18 @@ class Gitlab::Client
       get("/projects/#{url_encode id}")
     end
 
-    def project_export(id, options = {})
-      post("/projects/#{url_encode id}/export", query: options)
+    # Export information about a project.
+    #
+    # @example
+    #   Gitlab.project_export(3)
+    #   Gitlab.project('gitlab')
+    #
+    # @param  [Integer, String] id The ID or path of a project.
+    # @param  [String] export URL.
+    # @param  [String] method to export to URL, Default is PUT.
+    # @option options [String] :description The page to retrieve
+    def project_export(id, url, method = "PUT", options = {})
+      post("/projects/#{url_encode id}/export", query: options.merge("upload[http_method]": method, "upload[url]": url))
     end
 
     # Creates a new project.
