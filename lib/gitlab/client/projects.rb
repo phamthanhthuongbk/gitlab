@@ -49,6 +49,10 @@ class Gitlab::Client
       get("/projects/#{url_encode id}")
     end
 
+    def project_export(id, options = {})
+      post("/projects/#{url_encode id}/export", query: options)
+    end
+
     # Creates a new project.
     #
     # @example
